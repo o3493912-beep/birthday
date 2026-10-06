@@ -282,8 +282,7 @@ const CONFIG = {
 
   // 🌙 جملة السماء عند النهاية
   skyLine: "النجوم بتنطفئ صحيح. بس ليش ما نكون القمر مثلا 😊",
-  candleHint: "تمنّي أمنية... ثم انفخي على الشمعة (اضغطي عليها) 🕯️",
-
+  candleHint: "تمنّي أمنية... ثم اضغطي على الشمعة لتطفئيها 🕯️",
   // 💌 الحوار بعد الرسالة الأخيرة
   moreBtn: "في كمان شي صغير 💌 (اضغطي لتشوفيها)",
   chat: [
@@ -560,17 +559,7 @@ function blow() {
 }
 $('cake').onclick = blow;
 async function listenBlow() {
-  try {
-    micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    const c = new (window.AudioContext || window.webkitAudioContext)(), a = c.createAnalyser(); a.fftSize = 512;
-    c.createMediaStreamSource(micStream).connect(a); const buf = new Uint8Array(a.fftSize); let hot = 0;
-    (function chk() {
-      if (!candleDone) { c.close(); return; }
-      a.getByteTimeDomainData(buf); let s = 0; for (const v of buf) s += (v - 128) ** 2;
-      hot = Math.sqrt(s / buf.length) / 128 > .18 ? hot + 1 : 0;
-      if (hot > 14) blow(); else requestAnimationFrame(chk);
-    })();
-  } catch (e) { /* بدون ميكروفون: الضغط على الشمعة يكفي */ }
+
 }
 
 /* ---------- حوار ما بعد الرسالة ---------- */
